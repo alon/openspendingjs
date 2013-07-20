@@ -42,6 +42,7 @@
 </style>
 </head>
 <body>
+<div id="log"></div>
 <div id="bubbletree" class="bubbletree" style="width: 80%; height: 500px">
 </div>
 <script type="text/javascript">
@@ -130,6 +131,21 @@ var sum_tree = function(node) {
     )
 };
 
+var console = {
+    "log": function(x) {
+        var e = document.getElementById("log");
+        var p = document.createElement("p");
+        p.innerHTML = x;
+        e.appendChild(p);
+    }
+};
+
+/*
+if (!console) {
+    console = my_console;
+    }
+    */
+
 /*
  * Returns a node of the form: {key:value, "children":[other_nodes]}
  * Which is a copy of the template tree plus the nodes in list, which
@@ -151,11 +167,12 @@ var tree_from_list = function(list, template) {
         console.log('template = ' + template);
         console.log('template.forEach = ' + template.forEach);
     }
+    //return {"id": "test", "label":"blalala", "amount":100.0, "children":[]};
     template.forEach(normalize);
     list.forEach(normalize);
     var visit = function(l) {
         while (l.parent != null) {
-            if (!d[l.parent].children[l.id]) {
+            if (l.id in d[l.parent].children) {
                 d[l.parent].children[l.id] = l;
             }
             l = d[l.parent];
@@ -175,7 +192,8 @@ var tree_from_list = function(list, template) {
 var doPaginatedQuery = function(query, callback) {
     var results = [];
     var onPageLoad = function(json) {
-        results = Array.concat(results, json.results);
+        results = results.concat(json.results);
+    console.log('got template ' + template_id);
         if (json.next) {
             $.getJSON(json.next, onPageLoad);
         } else {
@@ -195,7 +213,7 @@ var api = function(query) {
 }
 
 var onLoadSheet = function(json) {
-    var template_id = json.template.id;
+    template_id = json.template.id;
     console.log('got template ' + template_id);
     doPaginatedQuery('templates/nodes/?template=' + template_id, onLoadTemplate);
 };
@@ -214,8 +232,10 @@ var onLoadTemplate = function(results, count) {
 
 var onLoad = function(items, count) {
     items.forEach(function(c) {
-        c.parent = c.node;
-    })
+            c.parent = c.node;
+            c.label = c.name;
+            c.amount = 0.0 + c.budget;
+    });
     data = tree_from_list(items, template_list);
 
     window.bubbleTree = new BubbleTree({
@@ -228,6 +248,10 @@ var onLoad = function(items, count) {
             });
 };
 var sheet_id = 1;
+
+console.log("hello console");
+//my_console.log("hello my console");
+//document.my_console = my_console;
 
 /* get sheet template */
 $.getJSON(api('sheets/' + sheet_id + '/'), onLoadSheet);
