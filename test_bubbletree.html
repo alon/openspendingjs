@@ -51,7 +51,7 @@ alert(node);
 var btype = 'icon';
 //var data = {label:"hello_bubble"};
 // http://kommune.politiken.dk/data/budget530.json
-var data = {
+var example_data = {
 
     "id": "root",
     "label": "One",
@@ -99,14 +99,138 @@ var initTooltip = function(node, domnode) {
   domnode.setAttribute('tooltip', node.label+' &nbsp;<br /><big><b>'+node.famount+' kr.</b></big>');
   $(domnode).tooltip({ delay: 10, bodyHandler: getTooltip });
 };
-window.bubbleTree = new BubbleTree({
-        data: data,
-        container: '#bubbletree',
-        bubbleType: btype, 
-        //nodeClickCallback: onNodeClick,
-        initTooltip: initTooltip,
-        //rootPath: 'gfx/'
-      });
+
+/****************************/
+/*          tree util       */
+
+var walk_lfold = function(node, f_init, f, f_fini) {
+    var sum = f_init();
+    if (node.children) {
+        Object.getOwnPropertyNames(node.children).forEach(
+                function(k) {
+                    sum = f(sum, walk_lfold(node.children[k], f_init, f, f_fini));
+                });
+    };
+    return f_fini(sum, node);
+};
+
+var sum_tree = function(node) {
+    return walk_lfold(node, function() { return 0; },
+            function (sum, node_sum) {
+                return sum + node_sum;
+            },
+            function (sum, node) {
+                if (node.size) {
+                    sum += node.size;
+                } else {
+                    node.size = sum;
+                }
+                return sum
+            }
+    )
+};
+
+/*
+ * Returns a node of the form: {key:value, "children":[other_nodes]}
+ * Which is a copy of the template tree plus the nodes in list, which
+ * temselves are just leaves.
+ */
+var tree_from_list = function(list, template) {
+    var d = {};
+    var root = null;
+    var normalize = function (child) {
+        d[child.id] = child;
+        if (!child.children) {
+            child.children = {};
+        }
+        if (!child.parent) {
+            child.parent = null;
+        }
+    };
+    if (!template.forEach) {
+        console.log('template = ' + template);
+        console.log('template.forEach = ' + template.forEach);
+    }
+    template.forEach(normalize);
+    list.forEach(normalize);
+    var visit = function(l) {
+        while (l.parent != null) {
+            if (!d[l.parent].children[l.id]) {
+                d[l.parent].children[l.id] = l;
+            }
+            l = d[l.parent];
+            if (!l.parent) {
+                if (root == null) {
+                    root = d[l.id];
+                }
+            }
+        }
+    }
+    list.forEach(visit);
+    return root;
+};
+
+/****************************/
+
+var doPaginatedQuery = function(query, callback) {
+    var results = [];
+    var onPageLoad = function(json) {
+        results = Array.concat(results, json.results);
+        if (json.next) {
+            $.getJSON(json.next, onPageLoad);
+        } else {
+            // Doesn't return the api's json, but the concatenated results
+            callback(results, json.count);
+        }
+    }
+    $.getJSON(api(query + '&page_by=3000'), onPageLoad);
+}
+
+var template_list;
+var api_host = 'http://api.dev.openmuni.org.il';
+//var api_host = 'http://api.obudget.dev:8000';
+
+var api = function(query) {
+    return api_host + '/v1/' + query;
+}
+
+var onLoadSheet = function(json) {
+    var template_id = json.template.id;
+    console.log('got template ' + template_id);
+    doPaginatedQuery('templates/nodes/?template=' + template_id, onLoadTemplate);
+};
+
+var onLoadTemplate = function(results, count) {
+    results.forEach(function(r) {
+        if (r.parent) {
+            r.parent = r.parent.id;
+        }
+    });
+    template_list = results;
+    template_tree = tree_from_list(template_list, []);
+    console.log('got template list from ' + count + ' results: ' + template_list);
+    doPaginatedQuery('sheets/items/?sheets=' + sheet_id, onLoad);
+};
+
+var onLoad = function(items, count) {
+    items.forEach(function(c) {
+        c.parent = c.node;
+    })
+    data = tree_from_list(items, template_list);
+
+    window.bubbleTree = new BubbleTree({
+            data: data,
+            container: '#bubbletree',
+            bubbleType: btype, 
+            //nodeClickCallback: onNodeClick,
+            initTooltip: initTooltip,
+            //rootPath: 'gfx/'
+            });
+};
+var sheet_id = 1;
+
+/* get sheet template */
+$.getJSON(api('sheets/' + sheet_id + '/'), onLoadSheet);
 </script>
 </body>
 </html>
