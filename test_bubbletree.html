@@ -1,0 +1,1953 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8;charset=utf-8">
+<script type="text/javascript" src="lib/vendor/jquery.js"></script>
+<script type="text/javascript" src="lib/vendor/vis4.js"></script>
+<script type="text/javascript" src="lib/vendor/raphael.js"></script>
+<script type="text/javascript" src="lib/vendor/jquery.history.js"></script>
+<script type="text/javascript" src="lib/vendor/Tween.js"></script>
+<script type="text/javascript" src="lib/vendor/jquery.tooltip.js"></script>
+<script type="text/javascript" src="lib/vendor/bubbletree/2.0/bubbletree.js"></script>
+</head>
+<body>
+<div id="bubbletree">
+</div>
+<script type="text/javascript">
+var onNodeClick = function(node) {
+alert(node);
+};
+var btype = 'icon';
+//var data = {label:"hello_bubble"};
+// http://kommune.politiken.dk/data/budget530.json
+var data = {
+
+    "id": "root",
+    "level": 0,
+    "breakdowns": [ ],
+    "label": "Budgetteret i alt<br />Billund Kommune",
+    "color": "#C0B88A",
+    "amount": 1630637,
+    "children": [
+        {
+            "id": "0",
+            "level": 1,
+            "breakdowns": [ ],
+            "label": "Byudvikling, bolig og miljø",
+            "color": "#428D79",
+            "amount": 34410,
+            "children": [
+                {
+                    "id": "0-22",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Jordforsyning",
+                    "color": "#62AD99",
+                    "amount": 1000,
+                    "children": [
+                        {
+                            "id": "0-22-02",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Boligformål (jordforsyning)",
+                            "color": "#72BDA9",
+                            "amount": 1000,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        }
+                    ],
+                    "taxonomy": "style1"
+                },
+                {
+                    "id": "0-25",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Faste ejendomme",
+                    "color": "#62AD99",
+                    "amount": 4488,
+                    "children": [
+                        {
+                            "id": "0-25-10",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Fælles formål (faste ejendomme)",
+                            "color": "#72BDA9",
+                            "amount": 2468,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "housing.svg"
+                        },
+                        {
+                            "id": "0-25-11",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Beboelse",
+                            "color": "#72BDA9",
+                            "amount": 109,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "our-streets.svg"
+                        },
+                        {
+                            "id": "0-25-15",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Byfornyelse",
+                            "color": "#72BDA9",
+                            "amount": 146,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "our-streets.svg"
+                        },
+                        {
+                            "id": "0-25-18",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Driftsikring af boligbyggeri",
+                            "color": "#72BDA9",
+                            "amount": 1765,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "construction.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "housing.svg"
+                },
+                {
+                    "id": "0-28",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Fritidsområder",
+                    "color": "#62AD99",
+                    "amount": 8382,
+                    "children": [
+                        {
+                            "id": "0-28-20",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Gørnne områder og naturpladser",
+                            "color": "#72BDA9",
+                            "amount": 8382,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "community.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "community.svg"
+                },
+                {
+                    "id": "0-32",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Fritidsfaciliteter",
+                    "color": "#62AD99",
+                    "amount": 4611,
+                    "children": [
+                        {
+                            "id": "0-32-31",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Stadions, idrætsanlæg og svømmehaller",
+                            "color": "#72BDA9",
+                            "amount": 2871,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "sports.svg"
+                        },
+                        {
+                            "id": "0-32-35",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Andre fritidsfaciliteter",
+                            "color": "#72BDA9",
+                            "amount": 1740,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "sports.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "sports.svg"
+                },
+                {
+                    "id": "0-38",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Naturbeskyttelse",
+                    "color": "#62AD99",
+                    "amount": 1648,
+                    "children": [
+                        {
+                            "id": "0-38-50",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Naturforvaltningsprojekter",
+                            "color": "#72BDA9",
+                            "amount": 1269,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "environment-admin.svg"
+                        },
+                        {
+                            "id": "0-38-53",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Skove",
+                            "color": "#72BDA9",
+                            "amount": 379,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "forest.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "tree.svg"
+                },
+                {
+                    "id": "0-48",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Vandløbsvæsen",
+                    "color": "#62AD99",
+                    "amount": 2720,
+                    "children": [
+                        {
+                            "id": "0-48-71",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Vedligeholdelse af vandløb",
+                            "color": "#72BDA9",
+                            "amount": 2720,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        }
+                    ],
+                    "taxonomy": "style1"
+                },
+                {
+                    "id": "0-52",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Miljøbeskyttelse m.v.",
+                    "color": "#62AD99",
+                    "amount": 1752,
+                    "children": [
+                        {
+                            "id": "0-52-80",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Fælles formål (miljøforanstaltninger)",
+                            "color": "#72BDA9",
+                            "amount": 309,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "environment-admin.svg"
+                        },
+                        {
+                            "id": "0-52-81",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Jordforurening",
+                            "color": "#72BDA9",
+                            "amount": 37,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "0-52-87",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Miljøtilsyn - virksomheder",
+                            "color": "#72BDA9",
+                            "amount": 622,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "environment-admin.svg"
+                        },
+                        {
+                            "id": "0-52-89",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Øvrig planlægning, undersøgelser, tilsyn mv",
+                            "color": "#72BDA9",
+                            "amount": 784,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "planning.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "environment.svg"
+                },
+                {
+                    "id": "0-58",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Redningsberedskab",
+                    "color": "#62AD99",
+                    "amount": 9809,
+                    "children": [
+                        {
+                            "id": "0-58-95",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Redningsberedskab",
+                            "color": "#72BDA9",
+                            "amount": 9809,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "ambulance.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "ambulance.svg"
+                }
+            ],
+            "taxonomy": "style1",
+            "name": "style1",
+            "icon": "housing.svg"
+        },
+        {
+            "id": "1",
+            "level": 1,
+            "breakdowns": [ ],
+            "label": "Forsyningsvirksomhed",
+            "color": "#17745F",
+            "amount": 6725,
+            "children": [
+                {
+                    "id": "1-38",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Affaldshåndtering",
+                    "color": "#37947F",
+                    "amount": 6725,
+                    "children": [
+                        {
+                            "id": "1-38-65",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Genbrugsstationer",
+                            "color": "#47A48F",
+                            "amount": 6426,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "waste.svg"
+                        },
+                        {
+                            "id": "1-38-66",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Øvrige ordninger og anlæg",
+                            "color": "#47A48F",
+                            "amount": 299,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "waste.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "waste.svg"
+                }
+            ],
+            "taxonomy": "style1",
+            "name": "style1",
+            "icon": "energy2.svg"
+        },
+        {
+            "id": "2",
+            "level": 1,
+            "breakdowns": [ ],
+            "label": "Trafik og infrastruktur",
+            "color": "#60B07A",
+            "amount": 47827,
+            "children": [
+                {
+                    "id": "2-22",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Fælles funktioner",
+                    "color": "#80D09A",
+                    "amount": 154,
+                    "children": [
+                        {
+                            "id": "2-22-05",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Driftsbygninger og -pladser",
+                            "color": "#90E0AA",
+                            "amount": 154,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "admin.svg"
+                },
+                {
+                    "id": "2-28",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Kommunale veje",
+                    "color": "#80D09A",
+                    "amount": 41080,
+                    "children": [
+                        {
+                            "id": "2-28-11",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Vejvedligeholdelse m.v.",
+                            "color": "#90E0AA",
+                            "amount": 13906,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "car.svg"
+                        },
+                        {
+                            "id": "2-28-12",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Belægninger m.v.",
+                            "color": "#90E0AA",
+                            "amount": 18343,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "car.svg"
+                        },
+                        {
+                            "id": "2-28-14",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Vintertjeneste",
+                            "color": "#90E0AA",
+                            "amount": 4431,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "car.svg"
+                        },
+                        {
+                            "id": "2-28-22",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Vejanlæg",
+                            "color": "#90E0AA",
+                            "amount": 4400,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "construction.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "car.svg"
+                },
+                {
+                    "id": "2-32",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Kollektiv trafik",
+                    "color": "#80D09A",
+                    "amount": 6593,
+                    "children": [
+                        {
+                            "id": "2-32-30",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Fælles formål (kollektiv trafik)",
+                            "color": "#90E0AA",
+                            "amount": 39,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "2-32-31",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Busdrift",
+                            "color": "#90E0AA",
+                            "amount": 6554,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "railways.svg"
+                }
+            ],
+            "taxonomy": "style1",
+            "name": "style1",
+            "icon": "transport.svg"
+        },
+        {
+            "id": "3",
+            "level": 1,
+            "breakdowns": [ ],
+            "label": "Undervisning og kultur",
+            "color": "#D4854A",
+            "amount": 316634,
+            "children": [
+                {
+                    "id": "3-22",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Folkeskolen m.m.",
+                    "color": "#F4A56A",
+                    "amount": 272537,
+                    "children": [
+                        {
+                            "id": "3-22-18",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Idrætsfaciliteter for børn og unge",
+                            "color": "#F4B57A",
+                            "amount": 21029,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "sports.svg"
+                        },
+                        {
+                            "id": "3-22-01",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Folkeskoler",
+                            "color": "#F4B57A",
+                            "amount": 182313,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "schools.svg"
+                        },
+                        {
+                            "id": "3-22-02",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Fællesudgifter for kommunens samlede skolevæsen",
+                            "color": "#F4B57A",
+                            "amount": 3013,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "schools.svg"
+                        },
+                        {
+                            "id": "3-22-03",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Syge- og hjemmeundervisning",
+                            "color": "#F4B57A",
+                            "amount": 211,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "hospital.svg"
+                        },
+                        {
+                            "id": "3-22-04",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Pædagogisk psykologisk rådgivning m.v.",
+                            "color": "#F4B57A",
+                            "amount": 7921,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "3-22-05",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Skolefritidsordninger",
+                            "color": "#F4B57A",
+                            "amount": 15730,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "community.svg"
+                        },
+                        {
+                            "id": "3-22-06",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Befordring af elever i grundskolen",
+                            "color": "#F4B57A",
+                            "amount": 2849,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "primary.svg"
+                        },
+                        {
+                            "id": "3-22-07",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Specialundervisning i regionale tilbud",
+                            "color": "#F4B57A",
+                            "amount": 2633,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "3-22-08",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Kommunale specialskoler",
+                            "color": "#F4B57A",
+                            "amount": 13674,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "primary.svg"
+                        },
+                        {
+                            "id": "3-22-10",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Bidrag til statslige og private skoler",
+                            "color": "#F4B57A",
+                            "amount": 11160,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "schools.svg"
+                        },
+                        {
+                            "id": "3-22-12",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Efterskoler og ungdomskostskoler",
+                            "color": "#F4B57A",
+                            "amount": 8797,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "secondary-lower.svg"
+                        },
+                        {
+                            "id": "3-22-14",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Ungdommens Uddannelsesvejledning",
+                            "color": "#F4B57A",
+                            "amount": 2460,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "secondary-upper.svg"
+                        },
+                        {
+                            "id": "3-22-16",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Specialpædagogisk bistand til børn i førskolealderen",
+                            "color": "#F4B57A",
+                            "amount": 90,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "pre-school.svg"
+                        },
+                        {
+                            "id": "3-22-17",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Specialpædagogisk bistand til voksne",
+                            "color": "#F4B57A",
+                            "amount": 657,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "post-secondary.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "primary.svg"
+                },
+                {
+                    "id": "3-30",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Ungdomsuddannelser",
+                    "color": "#F4A56A",
+                    "amount": 8678,
+                    "children": [
+                        {
+                            "id": "3-30-44",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Produktionsskoler",
+                            "color": "#F4B57A",
+                            "amount": 1479,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "manufactoring-construction.svg"
+                        },
+                        {
+                            "id": "3-30-45",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Erhvervsgrunduddannelser",
+                            "color": "#F4B57A",
+                            "amount": 391,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "labour.svg"
+                        },
+                        {
+                            "id": "3-30-46",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Ungdomsuddannelse for unge med særlige behov",
+                            "color": "#F4B57A",
+                            "amount": 6808,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "secondary-upper.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "secondary-lower.svg"
+                },
+                {
+                    "id": "3-32",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Folkebiblioteker",
+                    "color": "#F4A56A",
+                    "amount": 11788,
+                    "children": [
+                        {
+                            "id": "3-32-50",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Folkebiblioteker",
+                            "color": "#F4B57A",
+                            "amount": 11788,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "books.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "books.svg"
+                },
+                {
+                    "id": "3-35",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Kulturel virksomhed",
+                    "color": "#F4A56A",
+                    "amount": 8075,
+                    "children": [
+                        {
+                            "id": "3-35-60",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Museer",
+                            "color": "#F4B57A",
+                            "amount": 1903,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "3-35-62",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Teatre",
+                            "color": "#F4B57A",
+                            "amount": 123,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "3-35-63",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Musikarrangementer",
+                            "color": "#F4B57A",
+                            "amount": 3568,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "3-35-64",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Andre kulturelle opgaver",
+                            "color": "#F4B57A",
+                            "amount": 2481,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "culture.svg"
+                },
+                {
+                    "id": "3-38",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Folkeoplysning og fritidsaktiviteter m.v.",
+                    "color": "#F4A56A",
+                    "amount": 15556,
+                    "children": [
+                        {
+                            "id": "3-38-72",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Folkeoplysende voksenundervisning",
+                            "color": "#F4B57A",
+                            "amount": 602,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "post-secondary.svg"
+                        },
+                        {
+                            "id": "3-38-73",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Frivilligt folkeoplysende foreningsarbejde",
+                            "color": "#F4B57A",
+                            "amount": 1858,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "post-secondary.svg"
+                        },
+                        {
+                            "id": "3-38-74",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Lokaletilskud",
+                            "color": "#F4B57A",
+                            "amount": 7953,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "3-38-76",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Ungdomsskolevirksomhed",
+                            "color": "#F4B57A",
+                            "amount": 5143,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "secondary-upper.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "books.svg"
+                }
+            ],
+            "taxonomy": "style1",
+            "name": "style1",
+            "icon": "education.svg"
+        },
+        {
+            "id": "4",
+            "level": 1,
+            "breakdowns": [ ],
+            "label": "Sygehusvæsen og sygesikring",
+            "color": "#6D0F05",
+            "amount": 124366,
+            "children": [
+                {
+                    "id": "4-62-81",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Aktivitetsbestemt medfinansiering af sundhedsvæsenet",
+                    "color": "#8D2F25",
+                    "amount": 87272,
+                    "children": [ ],
+                    "taxonomy": "style1",
+                    "icon": "hospital.svg"
+                },
+                {
+                    "id": "4-62-82",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Kommunal genoptræning og vedligeholdelsestræning",
+                    "color": "#8D2F25",
+                    "amount": 18487,
+                    "children": [ ],
+                    "taxonomy": "style1",
+                    "icon": "helping-others.svg"
+                },
+                {
+                    "id": "4-62-85",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Kommunal tandpleje",
+                    "color": "#8D2F25",
+                    "amount": 11313,
+                    "children": [ ],
+                    "taxonomy": "style1",
+                    "icon": "dental.svg"
+                },
+                {
+                    "id": "4-62-88",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Sundhedsfremme og forebyggelse",
+                    "color": "#8D2F25",
+                    "amount": 1133,
+                    "children": [ ],
+                    "taxonomy": "style1",
+                    "icon": "medical-supplies.svg"
+                },
+                {
+                    "id": "4-62-89",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Kommunale sundhedstjenester",
+                    "color": "#8D2F25",
+                    "amount": 4310,
+                    "children": [ ],
+                    "taxonomy": "style1",
+                    "icon": "health.svg"
+                },
+                {
+                    "id": "4-62-90",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Andre sundhedsudgifter",
+                    "color": "#8D2F25",
+                    "amount": 1851,
+                    "children": [ ],
+                    "taxonomy": "style1",
+                    "icon": "other-medical.svg"
+                }
+            ],
+            "taxonomy": "style1",
+            "name": "style1",
+            "icon": "hospital-specialized.svg"
+        },
+        {
+            "id": "5",
+            "level": 1,
+            "breakdowns": [ ],
+            "label": "Social- og sundhedsvæsen",
+            "color": "#56710A",
+            "amount": 823428,
+            "children": [
+                {
+                    "id": "5-25",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Dagtilbud til børn og unge",
+                    "color": "#76912A",
+                    "amount": 110792,
+                    "children": [
+                        {
+                            "id": "5-25-10",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Fælles formål (dagtilbud til børn og unge)",
+                            "color": "#86A13A",
+                            "amount": 9762,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "5-25-11",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Dagpleje",
+                            "color": "#86A13A",
+                            "amount": 38036,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "family.svg"
+                        },
+                        {
+                            "id": "5-25-13",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Børnehaver",
+                            "color": "#86A13A",
+                            "amount": 9158,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "5-25-14",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Integrerede daginstitutioner",
+                            "color": "#86A13A",
+                            "amount": 45298,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "5-25-16",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Klubber og andre socialpædagogiske fritidstilbud",
+                            "color": "#86A13A",
+                            "amount": 215,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "5-25-17",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Særlige dagtilbud og særlige klubber",
+                            "color": "#86A13A",
+                            "amount": 2247,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "5-25-19",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Tilskud til privatinstitutioner, priv. dagpleje, priv. fritidshjem, priv. klubber, puljeord.",
+                            "color": "#86A13A",
+                            "amount": 6076,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "family.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "pre-school.svg"
+                },
+                {
+                    "id": "5-28",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Tilbud til børn og unge med særlige behov",
+                    "color": "#76912A",
+                    "amount": 56449,
+                    "children": [
+                        {
+                            "id": "5-28-20",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Plejefamilier og opholdssteder for børn og unge",
+                            "color": "#86A13A",
+                            "amount": 32872,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "family.svg"
+                        },
+                        {
+                            "id": "5-28-21",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Forbyggende foranstaltninger for børn og unge",
+                            "color": "#86A13A",
+                            "amount": 18720,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "pre-school.svg"
+                        },
+                        {
+                            "id": "5-28-23",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Døgninstitutioner for børn og unge",
+                            "color": "#86A13A",
+                            "amount": 3285,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "pre-school.svg"
+                        },
+                        {
+                            "id": "5-28-24",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Sikrede døgninstitutioner for børn og unge",
+                            "color": "#86A13A",
+                            "amount": 1572,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "family2.svg"
+                },
+                {
+                    "id": "5-32",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Tilbud til ældre og handicappede i alt",
+                    "color": "#76912A",
+                    "amount": 250062,
+                    "children": [
+                        {
+                            "id": "5-32-30",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Ældreboliger",
+                            "color": "#86A13A",
+                            "amount": 5835,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "old-age.svg"
+                        },
+                        {
+                            "id": "5-32-32",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Pleje og omsorg mv. af ældre og handicappede",
+                            "color": "#86A13A",
+                            "amount": 191429,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "old-age.svg"
+                        },
+                        {
+                            "id": "5-32-33",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Forebyggende indsats for ældre og handicappede",
+                            "color": "#86A13A",
+                            "amount": 30163,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "helping-others.svg"
+                        },
+                        {
+                            "id": "5-32-35",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Hjælpemidler, forbrugsgoder, boligindretning og befordring",
+                            "color": "#86A13A",
+                            "amount": 22219,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "wheelchair.svg"
+                        },
+                        {
+                            "id": "5-32-37",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Løn og plejevederlag til pårørende",
+                            "color": "#86A13A",
+                            "amount": 416,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "money.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "wheelchair.svg"
+                },
+                {
+                    "id": "5-35",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Rådgivning",
+                    "color": "#76912A",
+                    "amount": 916,
+                    "children": [
+                        {
+                            "id": "5-35-40",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Rådgivning og rådgivningsinstitutioner",
+                            "color": "#86A13A",
+                            "amount": 916,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "planning.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "planning.svg"
+                },
+                {
+                    "id": "5-38",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Tilbud til voksne med særlige behov",
+                    "color": "#76912A",
+                    "amount": 71830,
+                    "children": [
+                        {
+                            "id": "5-38-42",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Botilbud mv. til personer med særlige sociale problemer",
+                            "color": "#86A13A",
+                            "amount": 2084,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "housing.svg"
+                        },
+                        {
+                            "id": "5-38-44",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Alkoholbehandling og behandlingshjem for alkoholskadede",
+                            "color": "#86A13A",
+                            "amount": 683,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "medical-supplies.svg"
+                        },
+                        {
+                            "id": "5-38-45",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Behandling af stofmisbrugere",
+                            "color": "#86A13A",
+                            "amount": 1883,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "medical-supplies.svg"
+                        },
+                        {
+                            "id": "5-38-50",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Botilbud for længerevarende ophold",
+                            "color": "#86A13A",
+                            "amount": 32180,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "housing.svg"
+                        },
+                        {
+                            "id": "5-38-52",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Botilbud til midlertidigt ophold",
+                            "color": "#86A13A",
+                            "amount": 17611,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "housing.svg"
+                        },
+                        {
+                            "id": "5-38-53",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Kontaktperson- og ledsagerordninger",
+                            "color": "#86A13A",
+                            "amount": 968,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "5-38-58",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Beskyttet beskæftigelse",
+                            "color": "#86A13A",
+                            "amount": 3714,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "labour.svg"
+                        },
+                        {
+                            "id": "5-38-59",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Aktivitets- og samværstilbud",
+                            "color": "#86A13A",
+                            "amount": 12707,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        }
+                    ],
+                    "taxonomy": "style1"
+                },
+                {
+                    "id": "5-46",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Tilbud til udlændinge",
+                    "color": "#76912A",
+                    "amount": 2681,
+                    "children": [
+                        {
+                            "id": "5-46-60",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Introduktionsprogram mv.",
+                            "color": "#86A13A",
+                            "amount": 1473,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "5-46-61",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Introduktionsydelse",
+                            "color": "#86A13A",
+                            "amount": 1208,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "social-systems.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "worldmap.svg"
+                },
+                {
+                    "id": "5-48",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Førtidspensioner og personlige tillæg",
+                    "color": "#76912A",
+                    "amount": 131537,
+                    "children": [
+                        {
+                            "id": "5-48-67",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Personlige tillæg m.v.",
+                            "color": "#86A13A",
+                            "amount": 2255,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "money.svg"
+                        },
+                        {
+                            "id": "5-48-68",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Førtidspension med 50 pct. refusion",
+                            "color": "#86A13A",
+                            "amount": 11832,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "social-systems.svg"
+                        },
+                        {
+                            "id": "5-48-69",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Førtidspension med 35 pct. refusion - tilkendt efter regler gældende fra 1.1 2003",
+                            "color": "#86A13A",
+                            "amount": 20068,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "social-systems.svg"
+                        },
+                        {
+                            "id": "5-48-70",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Førtidspension med 35 pct. refusion - tilkendt efter regler gældende fra 1.1 2003",
+                            "color": "#86A13A",
+                            "amount": 97382,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "social-systems.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "social-systems.svg"
+                },
+                {
+                    "id": "5-57",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Kontante ydelser",
+                    "color": "#76912A",
+                    "amount": 133828,
+                    "children": [
+                        {
+                            "id": "5-57-71",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Sygedagpenge",
+                            "color": "#86A13A",
+                            "amount": 39388,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "hospital.svg"
+                        },
+                        {
+                            "id": "5-57-72",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Sociale formål",
+                            "color": "#86A13A",
+                            "amount": 8612,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "5-57-73",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Kontanthjælp",
+                            "color": "#86A13A",
+                            "amount": 15921,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "unemployment.svg"
+                        },
+                        {
+                            "id": "5-57-75",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Aktiverede kontanthjælpsmodtagere",
+                            "color": "#86A13A",
+                            "amount": 15545,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "labour.svg"
+                        },
+                        {
+                            "id": "5-57-76",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Boligydelser til pensionister",
+                            "color": "#86A13A",
+                            "amount": 8384,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "housing.svg"
+                        },
+                        {
+                            "id": "5-57-77",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Boligsikring",
+                            "color": "#86A13A",
+                            "amount": 3540,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "housing.svg"
+                        },
+                        {
+                            "id": "5-57-78",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Dagpenge til forsikrede ledige",
+                            "color": "#86A13A",
+                            "amount": 42438,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "unemployment.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "social-systems.svg"
+                },
+                {
+                    "id": "5-58",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Revalidering",
+                    "color": "#76912A",
+                    "amount": 41709,
+                    "children": [
+                        {
+                            "id": "5-58-80",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Revalidering",
+                            "color": "#86A13A",
+                            "amount": 3985,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "unemployment.svg"
+                        },
+                        {
+                            "id": "5-58-81",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Løntilskud mv. til personer i fleksjob og personer i løntilskudsstillinger i målgruppe",
+                            "color": "#86A13A",
+                            "amount": 37724,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "labour.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "unemployment.svg"
+                },
+                {
+                    "id": "5-68",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Arbejdsmarkedsforanstaltninger",
+                    "color": "#76912A",
+                    "amount": 22786,
+                    "children": [
+                        {
+                            "id": "5-68-90",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Driftsudgifter til den kommunale beskæftigelsesindsats",
+                            "color": "#86A13A",
+                            "amount": 12981,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "unemployment.svg"
+                        },
+                        {
+                            "id": "5-68-91",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Beskæftigelsesindsats for forsikrede ledige",
+                            "color": "#86A13A",
+                            "amount": 6942,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "unemployment.svg"
+                        },
+                        {
+                            "id": "5-68-95",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Løntilskud til ledige ansat i kommuner",
+                            "color": "#86A13A",
+                            "amount": 1968,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "social-systems.svg"
+                        },
+                        {
+                            "id": "5-68-97",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Seniorjob til personer over 55 år",
+                            "color": "#86A13A",
+                            "amount": 138,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "5-68-98",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Beskæftigelsesordninger",
+                            "color": "#86A13A",
+                            "amount": 757,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "labour.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "labour.svg"
+                },
+                {
+                    "id": "5-72",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Støtte til frivilligt socialt arbejde og øvrige sociale formål",
+                    "color": "#76912A",
+                    "amount": 838,
+                    "children": [
+                        {
+                            "id": "5-72-99",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Øvrige sociale formål",
+                            "color": "#86A13A",
+                            "amount": 838,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        }
+                    ],
+                    "taxonomy": "style1"
+                }
+            ],
+            "taxonomy": "style1",
+            "name": "style1",
+            "icon": "helping-others.svg"
+        },
+        {
+            "id": "6",
+            "level": 1,
+            "breakdowns": [ ],
+            "label": "Administration m.v.",
+            "color": "#6A5C1F",
+            "amount": 237648,
+            "children": [
+                {
+                    "id": "6-42",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Politisk organisation",
+                    "color": "#8A7C3F",
+                    "amount": 6311,
+                    "children": [
+                        {
+                            "id": "6-42-40",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Fælles formål (politisk organisation)",
+                            "color": "#9A8C4F",
+                            "amount": 112,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "6-42-41",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Kommunalbestyrelsesmedlemmer",
+                            "color": "#9A8C4F",
+                            "amount": 5327,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "legislative.svg"
+                        },
+                        {
+                            "id": "6-42-42",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Kommissioner, råd og nævn",
+                            "color": "#9A8C4F",
+                            "amount": 330,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "legislative.svg"
+                        },
+                        {
+                            "id": "6-42-43",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Valg m.v.",
+                            "color": "#9A8C4F",
+                            "amount": 542,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "legislative.svg"
+                },
+                {
+                    "id": "6-45",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Administrativ organisation",
+                    "color": "#8A7C3F",
+                    "amount": 201365,
+                    "children": [
+                        {
+                            "id": "6-45-50",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Administrationsbygninger",
+                            "color": "#9A8C4F",
+                            "amount": 35164,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "admin.svg"
+                        },
+                        {
+                            "id": "6-45-51",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Sekretariat og forvaltninger",
+                            "color": "#9A8C4F",
+                            "amount": 91894,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "admin.svg"
+                        },
+                        {
+                            "id": "6-45-52",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Fælles IT og telefoni",
+                            "color": "#9A8C4F",
+                            "amount": 29611,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "human-resources.svg"
+                        },
+                        {
+                            "id": "6-45-53",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Administration vedrørende jobcentre og pilotjobcentre",
+                            "color": "#9A8C4F",
+                            "amount": 17602,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "admin.svg"
+                        },
+                        {
+                            "id": "6-45-54",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Administration vedrørende naturbeskyttelse",
+                            "color": "#9A8C4F",
+                            "amount": 2076,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "environment-admin.svg"
+                        },
+                        {
+                            "id": "6-45-55",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Administration vedrørende miljøbeskyttelse",
+                            "color": "#9A8C4F",
+                            "amount": 5700,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "environment-admin.svg"
+                        },
+                        {
+                            "id": "6-45-56",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Byggesagsbehandling",
+                            "color": "#9A8C4F",
+                            "amount": 445,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "construction.svg"
+                        },
+                        {
+                            "id": "6-45-57",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Voksen-, ældre- og handicapområdet",
+                            "color": "#9A8C4F",
+                            "amount": 6864,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        },
+                        {
+                            "id": "6-45-58",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Det specialiserede børneområde",
+                            "color": "#9A8C4F",
+                            "amount": 8217,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "family.svg"
+                        },
+                        {
+                            "id": "6-45-59",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Administrationsbidrag til Udbetaling Danmark",
+                            "color": "#9A8C4F",
+                            "amount": 3792,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "admin.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "admin.svg"
+                },
+                {
+                    "id": "6-48",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Erhvervsudvikling, turisme og landdistrikter",
+                    "color": "#8A7C3F",
+                    "amount": 6974,
+                    "children": [
+                        {
+                            "id": "6-48-60",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Diverse indtægter og udgifter efter forskellige love",
+                            "color": "#9A8C4F",
+                            "amount": 1411,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "money.svg"
+                        },
+                        {
+                            "id": "6-48-62",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Turisme",
+                            "color": "#9A8C4F",
+                            "amount": 5098,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "airplane.svg"
+                        },
+                        {
+                            "id": "6-48-67",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Erhvervsservice og iværksætteri",
+                            "color": "#9A8C4F",
+                            "amount": 465,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "manufactoring-construction.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "manufactoring-construction.svg"
+                },
+                {
+                    "id": "6-52",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Lønpuljer",
+                    "color": "#8A7C3F",
+                    "amount": 22998,
+                    "children": [
+                        {
+                            "id": "6-52-70",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Lønpuljer",
+                            "color": "#9A8C4F",
+                            "amount": 7963,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "social-systems.svg"
+                        },
+                        {
+                            "id": "6-52-72",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Tjenestemandspension",
+                            "color": "#9A8C4F",
+                            "amount": 8013,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "old-age.svg"
+                        },
+                        {
+                            "id": "6-52-74",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Interne forsikringspuljer",
+                            "color": "#9A8C4F",
+                            "amount": 7022,
+                            "children": [ ],
+                            "taxonomy": "style1"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "social-systems.svg"
+                }
+            ],
+            "taxonomy": "style1",
+            "name": "style1",
+            "icon": "admin.svg"
+        },
+        {
+            "id": "7",
+            "level": 1,
+            "breakdowns": [ ],
+            "label": "Renter, tilskud, udligning og skatter",
+            "color": "#300",
+            "amount": 16606,
+            "children": [
+                {
+                    "id": "7-55",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Renter af langfristet gæld",
+                    "color": "#500",
+                    "amount": 6070,
+                    "children": [
+                        {
+                            "id": "7-55-00",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Renter af langfristet gæld",
+                            "color": "#611",
+                            "amount": 6070,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "public-debt.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "public-debt.svg"
+                },
+                {
+                    "id": "7-62",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Tilskud og udligning",
+                    "color": "#500",
+                    "amount": 10536,
+                    "children": [
+                        {
+                            "id": "7-62-81",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Udligning og tilskud vedrørende udlændinge",
+                            "color": "#611",
+                            "amount": 7284,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "economic-aid.svg"
+                        },
+                        {
+                            "id": "7-62-82",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Kommunale bidrag til regionerne",
+                            "color": "#611",
+                            "amount": 3252,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "economic-aid.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "economic-aid.svg"
+                }
+            ],
+            "taxonomy": "style1",
+            "name": "style1",
+            "icon": "money.svg"
+        },
+        {
+            "id": "8",
+            "level": 1,
+            "breakdowns": [ ],
+            "label": "Balanceforskydninger",
+            "color": "#8D6915",
+            "amount": 22993,
+            "children": [
+                {
+                    "id": "8-55",
+                    "level": 2,
+                    "breakdowns": [ ],
+                    "label": "Forskydninger i langfristet gæld",
+                    "color": "#AD8935",
+                    "amount": 22993,
+                    "children": [
+                        {
+                            "id": "8-55-00",
+                            "level": 3,
+                            "breakdowns": [ ],
+                            "label": "Forskydninger i langfristet gæld",
+                            "color": "#bD9945",
+                            "amount": 22993,
+                            "children": [ ],
+                            "taxonomy": "style1",
+                            "icon": "public-debt.svg"
+                        }
+                    ],
+                    "taxonomy": "style1",
+                    "icon": "public-debt.svg"
+                }
+            ],
+            "taxonomy": "style1",
+            "name": "style1",
+            "icon": "public-debt.svg"
+        }
+    ]
+};
+
+var getTooltip = function() {
+  return this.getAttribute('tooltip');
+};
+var initTooltip = function(node, domnode) {
+  domnode.setAttribute('tooltip', node.label+' &nbsp;<br /><big><b>'+node.famount+' kr.</b></big>');
+  $(domnode).tooltip({ delay: 10, bodyHandler: getTooltip });
+};
+window.bubbleTree = new BubbleTree({
+        data: data,
+        container: '#bubbletree',
+        bubbleType: btype, 
+        //nodeClickCallback: onNodeClick,
+        initTooltip: initTooltip,
+        //rootPath: 'gfx/'
+      });
+</script>
+</body>
+</html>
