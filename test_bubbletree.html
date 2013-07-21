@@ -9,6 +9,7 @@
 <script type="text/javascript" src="lib/vendor/Tween.js"></script>
 <script type="text/javascript" src="lib/vendor/jquery.tooltip.js"></script>
 <script type="text/javascript" src="lib/vendor/bubbletree/2.0/bubbletree.js"></script>
+<script type="text/javascript" src="treeutil.js"></script>
 <style type="text/css">
 .bubbletree .label { font-family:RobotoRegular,Arial;position:absolute;color:#fff;text-align:center;cursor:default; }
 .bubbletree .amount { font-family:RobotoBoldCondensed,RobotoCondensed,Arial,Georgia,sans-serif;font-size:16px; }
@@ -50,48 +51,6 @@ var onNodeClick = function(node) {
 alert(node);
 };
 var btype = 'icon';
-//var data = {label:"hello_bubble"};
-// http://kommune.politiken.dk/data/budget530.json
-var example_data = {
-
-    "id": "root",
-    "label": "One",
-    "color": "#C0B88A",
-    "amount": 10000,
-    "children": [
-        {
-            "id": "beta",
-            "label": "Two",
-            "color": "#428D79",
-            "amount": 10000,
-            "children": [
-                {
-                    "id": "gamma",
-                    "label": "Three",
-                    "color": "#62AD99",
-                    "amount": 9809,
-                    "children": [ ],
-                    "taxonomy": "style1",
-                    "icon": "ambulance.svg"
-                },
-                {
-                    "id": "0-58-95",
-                    "breakdowns": [ ],
-                    "label": "Four",
-                    "color": "#72BDA9",
-                    "amount": 9809,
-                    "children": [ ],
-                    "taxonomy": "style1",
-                    "icon": "ambulance.svg"
-                }
-            ],
-            "taxonomy": "style1",
-            "icon": "ambulance.svg"
-        } ],
-    "taxonomy": "style1",
-    "name": "style1",
-    "icon": "housing.svg"
-};
 
 var getTooltip = function() {
   return this.getAttribute('tooltip');
@@ -99,36 +58,6 @@ var getTooltip = function() {
 var initTooltip = function(node, domnode) {
   domnode.setAttribute('tooltip', node.label+' &nbsp;<br /><big><b>'+node.famount+' kr.</b></big>');
   $(domnode).tooltip({ delay: 10, bodyHandler: getTooltip });
-};
-
-/****************************/
-/*          tree util       */
-
-var walk_lfold = function(node, f_init, f, f_fini) {
-    var sum = f_init();
-    if (node.children) {
-        Object.getOwnPropertyNames(node.children).forEach(
-                function(k) {
-                    sum = f(sum, walk_lfold(node.children[k], f_init, f, f_fini));
-                });
-    };
-    return f_fini(sum, node);
-};
-
-var sum_tree = function(node) {
-    return walk_lfold(node, function() { return 0; },
-            function (sum, node_sum) {
-                return sum + node_sum;
-            },
-            function (sum, node) {
-                if (node.size) {
-                    sum += node.size;
-                } else {
-                    node.size = sum;
-                }
-                return sum
-            }
-    )
 };
 
 var console = {
@@ -140,60 +69,17 @@ var console = {
     }
 };
 
+
 /*
 if (!console) {
     console = my_console;
     }
     */
 
-/*
- * Returns a node of the form: {key:value, "children":[other_nodes]}
- * Which is a copy of the template tree plus the nodes in list, which
- * temselves are just leaves.
- */
-var tree_from_list = function(list, template) {
-    var d = {};
-    var root = null;
-    var normalize = function (child) {
-        d[child.id] = child;
-        if (!child.children) {
-            child.children = {};
-        }
-        if (!child.parent) {
-            child.parent = null;
-        }
-    };
-    if (!template.forEach) {
-        console.log('template = ' + template);
-        console.log('template.forEach = ' + template.forEach);
-    }
-    //return {"id": "test", "label":"blalala", "amount":100.0, "children":[]};
-    template.forEach(normalize);
-    list.forEach(normalize);
-    var visit = function(l) {
-        while (l.parent != null) {
-            if (l.id in d[l.parent].children) {
-                d[l.parent].children[l.id] = l;
-            }
-            l = d[l.parent];
-            if (!l.parent) {
-                if (root == null) {
-                    root = d[l.id];
-                }
-            }
-        }
-    }
-    list.forEach(visit);
-    return root;
-};
-
-/****************************/
-
 var doPaginatedQuery = function(query, callback) {
     var results = [];
     var onPageLoad = function(json) {
         results = results.concat(json.results);
-    console.log('got template ' + template_id);
         if (json.next) {
             $.getJSON(json.next, onPageLoad);
         } else {
@@ -225,19 +111,30 @@ var onLoadTemplate = function(results, count) {
         }
     });
     template_list = results;
-    template_tree = tree_from_list(template_list, []);
-    console.log('got template list from ' + count + ' results: ' + template_list);
+    template_tree = tree_from_list(template_list, [], null);
+    document.template_tree=template_tree;
+    console.log('got template list from ' + count + ' results');
     doPaginatedQuery('sheets/items/?sheets=' + sheet_id, onLoad);
 };
 
 var onLoad = function(items, count) {
-    items.forEach(function(c) {
-            c.parent = c.node;
-            c.label = c.name;
-            c.amount = 0.0 + c.budget;
-    });
-    data = tree_from_list(items, template_list);
-
+    var normalize = function(c) {
+        c.parent = c.node;
+        c.label = c.name;
+        console.log(c.name + ' planned ' + c.budget + '(' + c.amount + ')');
+        c.amount = 0.0 + c.budget;
+        var children = [];
+        for (k in c.children) {
+            children.push(c.children[k]);
+        }
+        c.children = children;
+    }
+    items.forEach(normalize);
+    template_list.forEach(normalize);
+    console.log('template tree is ' + template_tree);
+    data = tree_from_list(items, template_list, template_tree);
+    sum_tree(data, 'amount');
+    document.data = data;
     window.bubbleTree = new BubbleTree({
             data: data,
             container: '#bubbletree',
