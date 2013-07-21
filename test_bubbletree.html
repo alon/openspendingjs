@@ -111,6 +111,7 @@ var onLoadTemplate = function(results, count) {
     });
     template_list = results;
     template_tree = tree_from_list(template_list);
+    template_tree.label = template_tree.name = entity_name;
     document.template_tree = template_tree;
     //console.log('got template list from ' + count + ' results');
     doPaginatedQuery('sheets/items/?sheets=' + sheet_id, onLoad);
@@ -167,6 +168,8 @@ var onLoad = function(items, count) {
     }
 };
 var sheet_id = 1;
+var entity_id = 81; // actually can get from sheet_id via sheets/<id>/.entity.id (and .url)
+var entity_name = "Kiryat Bialik";
 
 console.log("hello console");
 //my_console.log("hello my console");
