@@ -142,6 +142,16 @@ var onLoad = function(items, count) {
         template_tree.d[item.node].children.push(item);
     }
     sum_tree(template_tree, 'amount');
+    walk_lfold(template_tree, null, null, function (node) {
+            var new_children = [];
+            for (k in node.children) {
+                var item = node.children[k];
+                if (item.amount != 0) {
+                    new_children.push(item);
+                }
+            }
+            node.children = new_children;
+        });
     document.data = template_tree;
     if (!template_tree.amount) {
         console.log('template tree has incorrect amount, avoiding bubble, look at document.template_tree')

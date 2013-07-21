@@ -2,15 +2,15 @@
 /*          tree util       */
 
 var walk_lfold = function(node, f_init, f, f_fini) {
-    var sum = f_init();
+    var sum = f_init ? f_init() : 0;
     if (node.children) {
         node.children.forEach(
                 function (c) {
                     console.log('summing ' + '(' + c.id + '): ' + c.amount);
-                    sum = f(sum, walk_lfold(c, f_init, f, f_fini));
+                    sum = f ? f(sum, walk_lfold(c, f_init, f, f_fini)) : 0;
                 });
     };
-    return f_fini(sum, node);
+    return f_fini ? f_fini(sum, node) : sum;
 };
 
 var sum_tree = function(node, field) {
