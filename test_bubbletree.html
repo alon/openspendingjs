@@ -60,7 +60,8 @@ var initTooltip = function(node, domnode) {
   $(domnode).tooltip({ delay: 10, bodyHandler: getTooltip });
 };
 
-var console = {
+/*
+var my_console = {
     "log": function(x) {
         var e = document.getElementById("log");
         var p = document.createElement("p");
@@ -69,12 +70,10 @@ var console = {
     }
 };
 
-
-/*
 if (!console) {
     console = my_console;
     }
-    */
+*/
 
 var doPaginatedQuery = function(query, callback) {
     var results = [];
@@ -100,7 +99,7 @@ var api = function(query) {
 
 var onLoadSheet = function(json) {
     template_id = json.template.id;
-    console.log('got template ' + template_id);
+    //console.log('got template ' + template_id);
     doPaginatedQuery('templates/nodes/?template=' + template_id, onLoadTemplate);
 };
 
@@ -111,9 +110,9 @@ var onLoadTemplate = function(results, count) {
         }
     });
     template_list = results;
-    template_tree = tree_from_list(template_list, [], null);
-    document.template_tree=template_tree;
-    console.log('got template list from ' + count + ' results');
+    template_tree = tree_from_list(template_list);
+    document.template_tree = template_tree;
+    //console.log('got template list from ' + count + ' results');
     doPaginatedQuery('sheets/items/?sheets=' + sheet_id, onLoad);
 };
 
@@ -121,28 +120,41 @@ var onLoad = function(items, count) {
     var normalize = function(c) {
         c.parent = c.node;
         c.label = c.name;
-        console.log(c.name + ' planned ' + c.budget + '(' + c.amount + ')');
-        c.amount = 0.0 + c.budget;
-        var children = [];
-        for (k in c.children) {
-            children.push(c.children[k]);
-        }
-        c.children = children;
+        c.amount = +c.budget;
     }
-    items.forEach(normalize);
-    template_list.forEach(normalize);
+    document.items = items;
+    // why is this different then items.forEach(normalize) ?
+    for (k in items) {
+        var item = items[k];
+        normalize(item);
+        if (!item.amount || item.amount == 0) {
+            console.log('error: ' + item.name + ' planned ' + item.budget + '(' + item.amount + ')');
+        }
+    }
+    for (k in template_tree.d) {
+        var item = template_tree.d[k];
+        item.label = item.name;
+    }
     console.log('template tree is ' + template_tree);
-    data = tree_from_list(items, template_list, template_tree);
-    sum_tree(data, 'amount');
-    document.data = data;
-    window.bubbleTree = new BubbleTree({
-            data: data,
-            container: '#bubbletree',
-            bubbleType: btype, 
-            //nodeClickCallback: onNodeClick,
-            initTooltip: initTooltip,
-            //rootPath: 'gfx/'
-            });
+    for (k in items) {
+        var item = items[k];
+        console.log(item.name + ' planned ' + item.budget + '(' + item.amount + ')');
+        template_tree.d[item.node].children.push(item);
+    }
+    sum_tree(template_tree, 'amount');
+    document.data = template_tree;
+    if (!template_tree.amount) {
+        console.log('template tree has incorrect amount, avoiding bubble, look at document.template_tree')
+    } else {
+        window.bubbleTree = new BubbleTree({
+                data: template_tree,
+                container: '#bubbletree',
+                bubbleType: btype, 
+                //nodeClickCallback: onNodeClick,
+                initTooltip: initTooltip,
+                //rootPath: 'gfx/'
+                });
+    }
 };
 var sheet_id = 1;
 
