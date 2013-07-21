@@ -6,7 +6,7 @@ var walk_lfold = function(node, f_init, f, f_fini) {
     if (node.children) {
         node.children.forEach(
                 function (c) {
-                    console.log('summing ' + '(' + c.id + '): ' + c.amount);
+                    //console.log('summing ' + '(' + c.id + '): ' + c.amount);
                     sum = f ? f(sum, walk_lfold(c, f_init, f, f_fini)) : 0;
                 });
     };
@@ -30,9 +30,8 @@ var sum_tree = function(node, field) {
 };
 
 /*
+ * Input is a list of nodes containing 'parent' and 'id' keys.
  * Returns a node of the form: {key:value, "children":[other_nodes]}
- * Which is a copy of the template tree plus the nodes in list, which
- * temselves are just leaves.
  */
 var tree_from_list = function(list) {
     var d = {};
